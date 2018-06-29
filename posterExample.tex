@@ -1,0 +1,147 @@
+% Metainformation
+\newcommand{\Title}{<Title of the Poster (keep it in one line)>}
+\newcommand{\Keywords}{}  % For metadata
+\newcommand{\Author}{}    % For metadata
+\newcommand{\Authors}{<author1>, <author2>, \dots \& <senior author>}
+\newcommand{\Contact}{<author@cbs.mpg.de>}
+\newcommand{\Institute}{Max Planck Institute for Human Cognitive and Brain Sciences, Leipzig, Germany} 
+\newcommand{\Eventdetails}{<event>, <location>, <year>}
+
+% Colour scheme configu
+\newcommand{\ColourThemeForeground}{0B8DCA}
+\newcommand{\ColourThemeBackground}{CBE8F7}
+\newcommand{\ColourThemeAltBackground}{DEDEDE}
+
+\input{mpicbsTaboTemplate.tex}
+
+
+
+\begin{document} 
+\begin{frame}[t]
+
+\mpiposterheader
+
+\vspace{\mpisizevpadding}
+
+\begin{columns}
+    
+  \begin{column}{.33\hsize - \tabcolsep}
+
+    \begin{mpiblock}[Introduction]
+      \lipsum[1]
+      \vspace{1em}
+      \lipsum[2]
+    \end{mpiblock}
+    
+  \end{column}
+
+  \begin{column}{.67\hsize - \tabcolsep}
+        
+    \begin{mpiblock}[Methods]
+      \lipsum[3]
+      \vspace{1em}
+      \lipsum[4]
+      \vspace{1em}
+      \lipsum[5]
+      \vspace{1em}
+      \lipsum[6]
+      \vspace{4.4em}
+    \end{mpiblock}
+
+  \end{column}
+
+\end{columns}
+
+\vspace{\mpisizevpadding}
+
+\begin{columns}
+
+\begin{column}{\hsize}
+
+\begin{mpiblock}[Results][altBackgroundColour]
+ 
+    \begin{multicols}{2}
+    
+      \lipsum[7]
+    
+      \lipsum[8]
+    
+      \begin{mpifig}{<title and/or number of the figure>}
+          \includegraphics[width=\columnwidth]{./graph/cookie.jpg}
+      \end{mpifig}
+    
+    \end{multicols}
+
+    \begin{multicols}{3}  
+      
+      \lipsum[8]
+      
+      \begin{mpifig}{<title and/or number of the figure>}
+        \includegraphics[width=\columnwidth]{./graph/count.jpg}
+      \end{mpifig}
+
+      \lipsum[9]
+    
+    \end{multicols}
+
+\end{mpiblock}
+  \end{column}
+
+\end{columns}
+
+\vspace{\mpisizevpadding}
+
+\begin{columns}
+    
+  \begin{column}{.67\hsize - \tabcolsep}
+
+    \begin{mpiblock}[Discussion]
+    
+      \lipsum[16]
+
+      \vspace{1em}
+      
+      \lipsum[14]
+    
+      \vspace{0.1em}
+
+    \end{mpiblock}
+    
+  \end{column}
+
+
+  \begin{column}{.33\hsize - \tabcolsep}
+
+    \begin{mpiblock}
+
+      \textbf{References:} 
+      \begin{enumerate}
+        \item Dummy ref
+        \item Dummy ref
+        \item Dummy ref
+        \item Dummy ref
+        \item Dummy ref
+        \item Dummy ref
+      \end{enumerate}
+
+      \vspace{1em}
+
+      \textbf{Acknowledgments:}\\
+        <Collaborator 1>\par%
+        <Collaborator 2>\par%
+        <Collaborator 3>\par%
+        <Toni / Klaus>\par%
+        <funding statement / grant agreement>
+
+      \vspace{1em}
+
+    \end{mpiblock}
+
+    \EventSignature
+    
+  \end{column}
+
+\end{columns}
+
+\end{frame}
+\end{document}

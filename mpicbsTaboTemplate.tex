@@ -1,0 +1,154 @@
+\documentclass[final,hyperref={pdfpagelabels=false}]{beamer}
+\usepackage[orientation=portrait,size=a0,scale=1.0,debug]{beamerposter}
+\beamertemplatenavigationsymbolsempty
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}             % TIKZ graphics description language
+\usepackage[nolist,nohyperlinks]{acronym}  % manage acronyms
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[nodayofweek]{datetime}  % format dates
+\usepackage{multicol}
+\usepackage{calc}             % allows for calculation in size fields
+\usepackage{xargs} 
+\usepackage{ifthen}
+\usepackage{cite} 
+\usepackage{rotating}         % rotate any object
+\usepackage{textpos}          % arbitrary text positioning
+\usepackage{lipsum}
+\usepackage{ae,aecompl}
+\hypersetup{pdftex, pdfauthor=\Author, pdftitle=\Title, pdfkeywords=\Keywords}
+%\usepackage{float}           % suppress float behavior
+%\usepackage[english]{babel}  % select language (different than English)
+
+
+%% Layout
+\setlength{\columnsep}{16mm}
+\setlength{\parskip}{8mm}
+\setlength{\tabcolsep}{5mm}
+\newlength{\mpisizeborder}
+\setlength{\mpisizeborder}{2mm}
+\newlength{\mpisizehpadding}
+\setlength{\mpisizehpadding}{12mm}
+\newlength{\mpisizevpadding}
+\setlength{\mpisizevpadding}{8mm}
+\newlength{\mpisizemargin}
+\setlength{\mpisizemargin}{10mm}
+\newlength{\mpisizeblocktitleheight}
+\setlength{\mpisizeblocktitleheight}{18mm}
+\newlength{\mpisizeblocktitlewidth}
+\setlength{\mpisizeblocktitlewidth}{100mm}
+\newlength{\mpisizecbslogooffset}
+\setlength{\mpisizecbslogooffset}{2mm}
+\newlength{\mpisizefigtitleheight}
+\setlength{\mpisizefigtitleheight}{12mm}
+\newlength{\mpisizefigtitlewidth}
+\setlength{\mpisizefigtitlewidth}{12mm}
+\newlength{\mpisizeblockheader}
+\setlength{\mpisizeblockheader}{0.087\paperheight}
+
+
+%% Colour scheme
+\definecolor{blockBorderColour}{HTML}{\ColourThemeForeground}
+\definecolor{blockTitleColour}{HTML}{FFFFFF}
+\definecolor{blockBackgroundColour}{HTML}{\ColourThemeBackground}
+\definecolor{posterTitleColour}{HTML}{\ColourThemeForeground}
+\definecolor{headerBorderColour}{HTML}{\ColourThemeForeground}
+\definecolor{headerBackgroundColour}{HTML}{FFFFFF}
+\definecolor{altBackgroundColour}{HTML}{\ColourThemeAltBackground}
+\definecolor{figureForegroundColour}{HTML}{\ColourThemeForeground}
+\definecolor{figureBackgroundColour}{HTML}{FFFFFF}
+
+
+%% Environment for custom-sized blocks
+%% USE:
+%% \begin{mpiblock}[block title (def: nothing)][background colour (def: blockBackgroundColour)]
+%%   my block stuff
+%% \end{mpiblock}
+\newenvironmentx{mpiblock}[2][1=, 2=blockBackgroundColour]{%
+    \bgroup\noindent\ignorespaces%
+    \gdef\mpiblocktitle{#1}%
+    \begin{tikzpicture}%
+        \node [draw=blockBorderColour, fill=#2, line width=\mpisizeborder,%
+                    rectangle, inner sep=\mpisizehpadding, inner ysep=\mpisizevpadding] (box) \bgroup%
+            \begin{minipage}[t!]{\textwidth - 2\mpisizeborder - 2\mpisizehpadding}%
+            \ifthenelse{\equal{\mpiblocktitle}{}}{}{\vspace{\mpisizeblocktitleheight}}%
+            \fontsize{30pt}{36pt}\selectfont}%
+            {\vfill%
+            \end{minipage}\egroup;%
+        \ifthenelse{\equal{\mpiblocktitle}{}}{}{%
+            \node[fill=blockBorderColour, text=blockTitleColour,%
+                    minimum width=\mpisizeblocktitlewidth, minimum height=\mpisizeblocktitleheight, anchor=north west]%
+                    at (box.north west) {%
+                \fontseries{l}\fontsize{0.7\mpisizeblocktitleheight}{\mpisizeblocktitleheight}\selectfont{\mpiblocktitle}};}
+    \end{tikzpicture}%
+    \noindent\ignorespacesafterend\egroup%
+}
+
+
+%% Environment for custom-sized figures
+%% USE:
+%% \begin{mpifig}[figure width (def: column width - padding){figure title}
+%%   \includegraphics[]{./myPony.png}
+%% \end{mpifig}
+\newenvironment{mpifig}[2][\columnwidth-\mpisizehpadding]{%
+    \gdef\mpifigtitle{#2}%
+    \bgroup\noindent\ignorespaces%
+    \begin{tikzpicture}%
+        \node [fill=figureBackgroundColour, rectangle, inner sep=0.4\mpisizehpadding,%
+               inner ysep=0.4\mpisizevpadding] (box) \bgroup%
+            \begin{minipage}{#1}}%
+            {\end{minipage}\egroup;%
+        \node[fill=figureForegroundColour, text=figureBackgroundColour, right=0pt, above=-\mpisizefigtitlewidth-.4\mpisizehpadding,%
+            minimum width=\mpisizefigtitleheight, minimum height=\mpisizefigtitlewidth, anchor=south east, inner sep=0.6\mpisizehpadding, inner ysep=0.5\mpisizevpadding]%
+            at (box.south east) {%
+        \fontseries{m}\fontsize{0.9\mpisizefigtitleheight}{\mpisizefigtitleheight}\selectfont{\mpifigtitle}};%
+    \end{tikzpicture}%
+    \noindent\ignorespacesafterend\egroup%
+}
+
+
+%% Command to print the poster's header
+\newcommand{\mpiposterheader}{%
+    \noindent\ignorespaces%
+    \setlength{\parskip}{\parskip - \mpisizecbslogooffset}%
+    \vspace{0mm}
+    \begin{tikzpicture}%
+        \node [draw=headerBorderColour, fill=headerBackgroundColour, line width=\mpisizeborder, rectangle, inner sep=12mm, inner ysep=12mm, align=center] (box) {%
+            \begin{minipage}[t][\mpisizeblockheader][t]{\hsize - 2\mpisizeborder - 2\mpisizehpadding}%
+            \vspace{6mm}%
+            \centering%
+            {\fontsize{72pt}{96pt}\selectfont\color{posterTitleColour}\Title}\par%
+            \vspace{12mm}%
+            {\fontsize{42pt}{80pt}\selectfont\Authors}\par%
+            \vspace{12mm}%
+            {\fontsize{36pt}{80pt}\itshape\selectfont\Institute}\par%
+            \vspace{12mm}%
+            {\fontsize{36pt}{80pt}\itshape\selectfont\Contact}%
+            \vskip-\parskip
+            \end{minipage}};%
+        \node [anchor=south west, inner sep=8mm, inner ysep=6mm] (mpilogoblack) at (box.south west) {\includegraphics[height=60mm]{./logos/mpi-logo-black.pdf}};%
+        \node [fill=headerBackgroundColour, rectangle, anchor=south east, minimum width=115mm, minimum height=2mm, right=-206mm] (bordercover) at (box.south east) {};%
+        \node [anchor=south east, inner sep=12mm, inner ysep=-\mpisizecbslogooffset] (mpicbslogo) at (box.south east) {\includegraphics[height=36mm]{./logos/mpi-cbs-logo.png}};%
+    \end{tikzpicture}%
+    \setlength{\parskip}{\parskip + \mpisizecbslogooffset}
+    \noindent\ignorespacesafterend%
+}
+
+
+% Prints the list of logos usually required for PhD students 
+\newcommand{\Logoslist}[2]{%
+    \includegraphics[height={#1}]{./logos/mpi-logo}\hspace{#2}%
+    \includegraphics[height={#1}]{./logos/unileipzig-logo}\hspace{#2}%
+    \includegraphics[height={#1}]{./logos/neurocom-logo}%
+}
+
+% Prints a small signature of the poster's venue
+\newcommand{\EventSignature}{%
+    \begin{textblock*}{0.8\mpisizemargin}[0,1](\hsize, 0em)%
+        \begin{sideways}\sffamily\fontsize{0.6\mpisizemargin}{0.8\mpisizemargin}\selectfont\Eventdetails\end{sideways}%
+    \end{textblock*}%
+}
+
